@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #4b5563;
+  --card: #fefce8;
+  --card-foreground: #4b5563;
+  --popover: #ffffff;
+  --popover-foreground: #4b5563;
+  --primary: #ff4500;
+  --primary-foreground: #ffffff;
+  --secondary: #ff7f50;
+  --secondary-foreground: #4b5563;
+  --muted: #fefce8;
+  --muted-foreground: #6b7280;
+  --accent: #ff7f50;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #f1f5f9;
+  --ring: rgba(255, 69, 0, 0.5);
+  --chart-1: #ff4500;
+  --chart-2: #ff7f50;
+  --chart-3: #fefce8;
+  --chart-4: #4b5563;
+  --chart-5: #ffffff;
+  --radius: 0.5rem;
+  --sidebar: #fefce8;
+  --sidebar-foreground: #4b5563;
+  --sidebar-primary: #ff4500;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ff7f50;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: rgba(255, 69, 0, 0.5);
+}
+
+.dark {
+  --background: #1f2937;
+  --foreground: #f9fafb;
+  --card: #374151;
+  --card-foreground: #f9fafb;
+  --popover: #1f2937;
+  --popover-foreground: #f9fafb;
+  --primary: #ff4500;
+  --primary-foreground: #ffffff;
+  --secondary: #ff7f50;
+  --secondary-foreground: #f9fafb;
+  --muted: #374151;
+  --muted-foreground: #9ca3af;
+  --accent: #ff7f50;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #4b5563;
+  --input: #374151;
+  --ring: rgba(255, 69, 0, 0.5);
+  --chart-1: #ff4500;
+  --chart-2: #ff7f50;
+  --chart-3: #fefce8;
+  --chart-4: #4b5563;
+  --chart-5: #ffffff;
+  --sidebar: #374151;
+  --sidebar-foreground: #f9fafb;
+  --sidebar-primary: #ff4500;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ff7f50;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #4b5563;
+  --sidebar-ring: rgba(255, 69, 0, 0.5);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  label,
+  span,
+  a,
+  li,
+  button {
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+}
