@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function SiteFooter() {
   return (
@@ -14,8 +15,8 @@ export function SiteFooter() {
             <span>chieftory72@gmail.com</span>
           </div>
           <div className="flex justify-center space-x-6 pt-4">
-            <Button variant="ghost" size="sm">
-              개인정보처리방침
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/privacy">개인정보처리방침</Link>
             </Button>
             <Button variant="ghost" size="sm">
               이용약관
