@@ -18,8 +18,8 @@ export function SiteFooter() {
             <Button asChild variant="ghost" size="sm">
               <Link to="/privacy">개인정보처리방침</Link>
             </Button>
-            <Button variant="ghost" size="sm">
-              이용약관
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/terms">이용약관</Link>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground pt-4">
