@@ -5,7 +5,7 @@
 ## 사이트 정보
 
 - 이름: 셰프토리 (Cheftory)
-- URL: https://www.cheftories.com
+- URL: https://www.cheftories.com/
 - 카테고리: 요리 앱, 레시피 자동화, AI 음성 어시스턴트
 - 언어: 한국어 (ko)
 
@@ -47,7 +47,7 @@
 
 ## 연락처
 
-- 웹사이트: https://www.cheftories.com
+- 웹사이트: https://www.cheftories.com/
 
 ## 키워드
 
