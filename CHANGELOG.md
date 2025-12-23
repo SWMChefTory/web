@@ -17,25 +17,9 @@
 ## [1.0.0] - 2025-12-23
 
 ### Added
-- 🎉 초기 랜딩 페이지 출시
-- 🎬 데모 비디오 섹션 (4단계 가이드)
-- 🌍 다국어 사용자 후기 섹션
-- 📱 App Store & Google Play 다운로드 링크
-- ⚡ 주요 기능 소개 섹션
-- 📊 사용자 통계 섹션
-- ❓ FAQ 섹션
-- 📧 문의 페이지
-- 📄 개인정보처리방침 페이지
-- 📄 이용약관 페이지
 
-### Technical
-- React 19 + TypeScript 5.8
-- Vite 7 빌드 시스템
-- TailwindCSS 3.4 스타일링
-- Radix UI 컴포넌트
-- Docker 기반 ARM64 배포
-- GitHub Actions CI/CD
-- Nginx 웹 서버
+- 🎉 Cheftory 랜딩 페이지 초기 출시
+- Docker 기반 자동 배포 시스템 구축
 
 ---
 
