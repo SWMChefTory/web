@@ -14,6 +14,35 @@
 
 ---
 
+## [1.0.2] - 2025-12-24
+
+### Added
+
+- 🎯 종합 SEO 최적화 시스템 구축
+  - SEO 메타 태그 (title, description, keywords, author)
+  - Open Graph 태그 (Facebook, LinkedIn, KakaoTalk 공유 최적화)
+  - Twitter Card 메타 태그
+  - Canonical URL 설정
+- 📱 PWA & 모바일 최적화
+  - Progressive Web App 메타 태그
+  - Apple Touch Icon 및 모바일 앱 설정
+  - manifest.json 연결
+- 🔍 한국 검색 엔진 최적화
+  - 네이버 사이트 인증 코드 추가
+  - Daum 검색 등록 (일반 등록 + 웹마스터 도구)
+  - Daum 전용 메타 태그 (daumdn:title, daumdn:description, daumdn:image)
+- 🤖 AI 검색 엔진 최적화
+  - llms.txt 생성 (ChatGPT, Claude, Gemini 등 AI 검색 대응)
+  - 앱 핵심 기능 및 사용 시나리오 상세 설명
+- 📊 구조화 데이터 (Schema.org)
+  - SoftwareApplication 스키마 (앱 정보, 기능, 평점, 가격)
+  - FAQPage 스키마 (자주 묻는 질문 4개, 리치 스니펫 지원)
+- 🗺️ 검색 엔진 크롤링 최적화
+  - robots.txt 생성 (크롤러 허용 + 사이트맵 위치 + Daum PIN)
+  - sitemap.xml 생성 (페이지 구조 정보 제공)
+
+---
+
 ## [1.0.1] - 2025-12-24
 
 ### Added
