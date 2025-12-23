@@ -2,6 +2,10 @@
 # Stage 1: Build
 FROM node:20-alpine AS builder
 
+# Build arguments for environment variables
+ARG VITE_GA_MEASUREMENT_ID
+ENV VITE_GA_MEASUREMENT_ID=$VITE_GA_MEASUREMENT_ID
+
 WORKDIR /app
 
 # Copy dependency files
@@ -13,7 +17,7 @@ RUN npm ci --only=production=false
 # Copy source code
 COPY . .
 
-# Build the app
+# Build the app (environment variables will be substituted by Vite)
 RUN npm run build
 
 # Stage 2: Production

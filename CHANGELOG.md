@@ -20,6 +20,7 @@
 
 - 📊 Google Analytics 4 (GA4) 방문자 추적 시스템 적용
 - 🔍 Google Search Console 연동 (GA4 자동 인증 방식)
+- 🔐 환경 변수 시스템 도입 (측정 ID 보안 강화)
 
 ---
 
