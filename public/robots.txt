@@ -1,0 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.cheftories.com/sitemap.xml
+
+# Daum Webmaster Tool Verification
+#DaumWebMasterTool:9078b3c38123c627d4cea19df994d1becd885a1190658823c1be5c655497253e:WyLFnx1BNADagFQmkVNGTA==
