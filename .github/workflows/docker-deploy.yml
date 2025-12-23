@@ -1,0 +1,160 @@
+name: Docker Build and Deploy to ARM Server
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # v1.0.0, v1.2.3 형식의 태그
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version_number=${VERSION#v}" >> $GITHUB_OUTPUT
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+
+          # CHANGELOG.md가 있으면 해당 버전의 내용 추출
+          if [ -f "CHANGELOG.md" ] && grep -q "## \[$VERSION\]" CHANGELOG.md; then
+            CHANGELOG=$(sed -n "/## \[$VERSION\]/,/## \[/p" CHANGELOG.md | sed '$d' | tail -n +2)
+          else
+            CHANGELOG="릴리스 노트는 CHANGELOG.md를 참조하세요."
+          fi
+
+          # GitHub Output으로 설정
+          echo "NOTES<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ steps.version.outputs.version }}
+          body: |
+            ## 🚀 릴리스 노트
+
+            ${{ steps.changelog.outputs.NOTES }}
+
+            ---
+
+            **배포 정보**
+            - 버전: ${{ steps.version.outputs.version }}
+            - 플랫폼: ARM64
+            - 컨테이너: cheftory-homepage
+
+            **전체 변경사항**: [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+
+  build-and-deploy:
+    needs: create-release
+    runs-on: self-hosted  # Runner 서버에서 빌드
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version_number=${VERSION#v}" >> $GITHUB_OUTPUT
+
+      - name: Build Docker image
+        timeout-minutes: 20
+        run: |
+          docker build -t cheftory-homepage:latest .
+
+      - name: Save Docker image to tar
+        run: |
+          docker save cheftory-homepage:latest -o cheftory-homepage.tar
+
+      - name: Check tar file size
+        run: |
+          ls -lh cheftory-homepage.tar
+          echo "Image size: $(du -h cheftory-homepage.tar | cut -f1)"
+
+      - name: Transfer Docker image to deployment server
+        run: |
+          scp -P ${{ secrets.DEPLOY_SERVER_PORT }} \
+            cheftory-homepage.tar \
+            ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }}:/home/filient/docker/cheftory_homepage/
+
+      - name: Transfer docker-compose.yml
+        run: |
+          scp -P ${{ secrets.DEPLOY_SERVER_PORT }} \
+            docker-compose.yml \
+            ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }}:/home/filient/docker/cheftory_homepage/
+
+      - name: Deploy on deployment server
+        run: |
+          ssh -p ${{ secrets.DEPLOY_SERVER_PORT }} \
+            ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }} << 'EOF'
+            cd /home/filient/docker/cheftory_homepage
+
+            # Docker 이미지 로드
+            echo "Loading Docker image..."
+            docker load -i cheftory-homepage.tar
+
+            # 기존 컨테이너 중지 및 제거
+            echo "Stopping existing container..."
+            docker compose down || true
+
+            # 새 컨테이너 시작
+            echo "Starting new container..."
+            docker compose up -d
+
+            # 컨테이너 상태 확인
+            echo "Checking container status..."
+            docker compose ps
+
+            # cheftory-homepage의 오래된 이미지만 정리
+            echo "Cleaning up old cheftory-homepage images..."
+            docker images | grep cheftory-homepage | grep "<none>" | awk '{print $3}' | xargs -r docker rmi || true
+
+            # tar 파일 삭제
+            echo "Removing tar file..."
+            rm -f cheftory-homepage.tar
+
+            # Health check
+            echo "Verifying deployment..."
+            sleep 5
+            curl -f http://localhost:3001/health || exit 1
+
+            echo "Deployment completed successfully!"
+          EOF
+
+      - name: Cleanup local tar file
+        if: always()
+        run: |
+          rm -f cheftory-homepage.tar
+
+      - name: Deployment summary
+        if: success()
+        run: |
+          echo "✅ Deployment successful!"
+          echo "Version: ${{ steps.version.outputs.version }}"
+          echo "Deployment server: ${{ secrets.DEPLOY_SERVER_HOST }}"
+          echo "Container: cheftory-homepage"
