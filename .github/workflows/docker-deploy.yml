@@ -85,7 +85,9 @@ jobs:
       - name: Build Docker image
         timeout-minutes: 20
         run: |
-          docker build -t cheftory-homepage:latest .
+          docker build \
+            --build-arg VITE_GA_MEASUREMENT_ID=${{ secrets.VITE_GA_MEASUREMENT_ID }} \
+            -t cheftory-homepage:latest .
 
       - name: Save Docker image to tar
         run: |
