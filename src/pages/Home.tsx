@@ -114,6 +114,14 @@ export default function Home() {
                     asChild
                     size="lg"
                     className="h-14 px-8 rounded-full bg-gradient-to-r from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 text-white shadow-xl hover:shadow-2xl transition-all hover:scale-105 text-base font-semibold"
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && window.gtag) {
+                        window.gtag('event', 'download_app', {
+                          platform: 'app_store',
+                          location: 'hero'
+                        });
+                      }
+                    }}
                 >
                   <a href="https://play.google.com/store/apps/details?id=com.cheftory.cheftory" target="_blank" rel="noopener noreferrer">
                     <Apple className="w-5 h-5 mr-2" />
@@ -126,6 +134,14 @@ export default function Home() {
                     size="lg"
                     variant="outline"
                     className="h-14 px-8 rounded-full border-2 border-gray-300 text-gray-700 hover:bg-gray-50 transition-all hover:scale-105 text-base font-semibold"
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && window.gtag) {
+                        window.gtag('event', 'download_app', {
+                          platform: 'google_play',
+                          location: 'hero'
+                        });
+                      }
+                    }}
                 >
                   <a href="https://play.google.com/store/apps/details?id=com.cheftory.cheftory&hl=ko" target="_blank" rel="noopener noreferrer">
                     <Play className="w-5 h-5 mr-2" />
@@ -485,6 +501,14 @@ export default function Home() {
                   asChild
                   size="lg"
                   className="h-16 px-10 rounded-full bg-white text-orange-600 hover:bg-gray-100 shadow-2xl hover:scale-105 transition-all text-lg font-bold"
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && window.gtag) {
+                      window.gtag('event', 'download_app', {
+                        platform: 'app_store',
+                        location: 'cta'
+                      });
+                    }
+                  }}
               >
                 <a href="https://apps.apple.com/kr/app/쉐프토리-sns-영상을-레시피로-핸즈프리-도우미/id6751566827" target="_blank" rel="noopener noreferrer">
                   <Apple className="w-6 h-6 mr-2" />
@@ -497,6 +521,14 @@ export default function Home() {
                   size="lg"
                   variant="outline"
                   className="h-16 px-10 rounded-full border-2 border-white text-white hover:bg-white/10 transition-all hover:scale-105 text-lg font-bold"
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && window.gtag) {
+                      window.gtag('event', 'download_app', {
+                        platform: 'google_play',
+                        location: 'cta'
+                      });
+                    }
+                  }}
               >
                 <a href="https://play.google.com/store/apps/details?id=com.cheftory.cheftory&hl=ko" target="_blank" rel="noopener noreferrer">
                   <Play className="w-6 h-6 mr-2" />
